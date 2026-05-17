@@ -20,6 +20,9 @@
             --text-dark: #2C1810;
             --text-light: #FDF5E6;
             --bg-cream: #FFF8DC;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
         }
 
         body {
@@ -29,7 +32,7 @@
             line-height: 1.6;
         }
 
-        h1, h2, h3, h4 {
+        h1, h2, h3, h4, h5 {
             font-family: 'Playfair Display', serif;
         }
 
@@ -40,12 +43,20 @@
             padding: 2rem 0;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         header h1 {
             font-size: 3rem;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header .book-edition {
+            font-style: italic;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
         }
 
         /* Navigation */
@@ -62,23 +73,40 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 1rem;
+            padding: 0.5rem;
+            gap: 0.2rem;
         }
 
         nav ul li {
-            margin: 0 1rem;
+            margin: 0;
         }
 
         nav ul li a {
             color: var(--text-light);
             text-decoration: none;
             font-weight: 700;
-            transition: color 0.3s;
-            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+            padding: 0.7rem 1rem;
+            display: block;
+            font-size: 0.9rem;
+            border-radius: 4px;
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover, nav ul li a.active {
             color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.5rem;
         }
 
         /* Container */
@@ -103,6 +131,92 @@
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        /* Filter System */
+        .filters-container {
+            background: var(--bg-cream);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--accent-color);
+        }
+
+        .filters-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.5rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 5px;
+            background: white;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+        }
+
+        .filter-btn.reset {
+            background: #6c757d;
+        }
+
+        .filter-btn.reset:hover {
+            background: #5a6268;
         }
 
         /* Cards */
@@ -119,6 +233,8 @@
             border-radius: 10px;
             padding: 1.5rem;
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -129,6 +245,7 @@
         .card h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+            font-size: 1.4rem;
         }
 
         .card .tag {
@@ -138,7 +255,73 @@
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            margin: 0.25rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+        }
+
+        .card .tags-container {
+            margin: 0.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        /* Recipe Card Specifics */
+        .recipe-card .recipe-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .recipe-card .recipe-meta div {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .recipe-card .difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .difficulty.fácil { background: #e8f5e9; color: #2e7d32; }
+        .difficulty.media { background: #fff3e0; color: #ef6c00; }
+        .difficulty.difícil { background: #ffebee; color: #c62828; }
+
+        .recipe-card .ingredients-list {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .recipe-card .ingredients-list li {
+            margin-bottom: 0.3rem;
+        }
+
+        .view-recipe-btn {
+            display: inline-block;
+            margin-top: auto;
+            padding: 0.6rem 1.2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            text-align: center;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .view-recipe-btn:hover {
+            background: var(--secondary-color);
         }
 
         /* Map Container */
@@ -155,6 +338,7 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .map-controls select, .map-controls button {
@@ -163,6 +347,7 @@
             border-radius: 5px;
             background: white;
             cursor: pointer;
+            font-family: 'Lato', sans-serif;
         }
 
         .map-controls button {
@@ -185,11 +370,13 @@
             color: var(--secondary-color);
             font-weight: bold;
             font-size: 1.1rem;
+            margin: 0.5rem 0;
         }
 
         .job-card .requirements {
             margin-top: 1rem;
             padding-left: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .job-card .requirements li {
@@ -205,6 +392,10 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background 0.3s;
+            text-align: center;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
         }
 
         .apply-btn:hover {
@@ -234,7 +425,198 @@
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            margin-top: 0.5rem;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+
+        /* Tabs System */
+        .tabs-container {
+            margin: 2rem 0;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s;
+            font-family: 'Lato', sans-serif;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--secondary-color);
+            background: rgba(210, 105, 30, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Index Lists */
+        .index-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .index-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .index-list li:last-child {
+            border-bottom: none;
+        }
+
+        .index-list li a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .index-list li a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .index-list .page-num {
+            background: var(--accent-color);
+            color: var(--text-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Commercial Index */
+        .commercial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .commercial-category {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .commercial-category h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .commercial-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .commercial-category ul li {
+            padding: 0.4rem 0;
+            border-bottom: 1px dotted #eee;
+        }
+
+        .commercial-category ul li:last-child {
+            border-bottom: none;
+        }
+
+        .commercial-category ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .commercial-category ul li a:hover {
+            color: var(--secondary-color);
+            padding-left: 3px;
+        }
+
+        /* Formation Section */
+        .formation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .formation-card {
+            background: var(--bg-cream);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .formation-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .formation-card ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .formation-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Popular Cooks */
+        .cooks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .cook-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .cook-card .cook-name {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .cook-card .cook-specialty {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 1rem;
         }
 
         /* Responsive */
@@ -246,10 +628,29 @@
             nav ul {
                 flex-direction: column;
                 align-items: center;
+                display: none;
+            }
+
+            nav ul.active {
+                display: flex;
             }
 
             nav ul li {
-                margin: 0.5rem 0;
+                margin: 0.3rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul li a {
+                width: 100%;
+                padding: 0.8rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
             }
 
             .container {
@@ -258,6 +659,14 @@
 
             #map {
                 height: 400px;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recipe-card .recipe-meta {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -272,29 +681,99 @@
             padding: 1rem;
             border-radius: 5px;
             margin-top: 1rem;
+            border-left: 3px solid var(--accent-color);
         }
 
         .recipe-preview h4 {
             color: var(--secondary-color);
             margin-bottom: 0.5rem;
         }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer .book-reference {
+            font-style: italic;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .hidden { display: none; }
+        
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 1.5rem auto;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            background: white;
+            padding-right: 3rem;
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>🍲 La Cocina Tachirense</h1>
-        <p>Gastronomía, Empleo y Turismo en el Táchira</p>
-        <p>Leonor Peña - Segunda Edición 2005</p>
+        <p class="book-edition">Gastronomía, Empleo y Turismo en el Táchira</p>
+        <p class="book-edition">Leonor Peña - Segunda Edición 2005</p>
+        <button class="menu-toggle" id="menuToggle">☰ Menú</button>
     </header>
 
     <nav>
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#empleo">Empleo</a></li>
-            <li><a href="#rutas">Rutas Gastronómicas</a></li>
-            <li><a href="#restaurantes">Restaurantes</a></li>
+        <ul id="mainMenu">
+            <li><a href="#inicio" class="active">Inicio</a></li>
+            <li><a href="#cocina">Cocina Tachirense</a></li>
+            <li><a href="#panaderia">Panadería</a></li>
+            <li><a href="#licores">Licores</a></li>
+            <li><a href="#charcuteria">Charcutería</a></li>
+            <li><a href="#dulces">Dulces Tachirenses</a></li>
+            <li><a href="#ofertas">Ofertas Gastronómicas</a></li>
+            <li><a href="#formacion">Formación</a></li>
+            <li><a href="#tradicional">Cocina Tradicional</a></li>
+            <li><a href="#comercial">Índice Comercial</a></li>
             <li><a href="#mapa">Mapa Interactivo</a></li>
-            <li><a href="#recetas">Recetas</a></li>
         </ul>
     </nav>
 
@@ -303,6 +782,11 @@
         <section id="inicio">
             <h2>Bienvenidos al Paraíso Gastronómico del Táchira</h2>
             <p>Descubre la riqueza culinaria de nuestra tierra, encuentra empleo en el sector gastronómico y explora las mejores rutas y restaurantes del estado Táchira.</p>
+            
+            <div class="search-container">
+                <input type="text" id="globalSearch" placeholder="Buscar recetas, restaurantes, ingredientes...">
+                <button type="button">🔍</button>
+            </div>
             
             <div class="card-grid">
                 <div class="card">
@@ -323,277 +807,729 @@
             </div>
         </section>
 
-        <!-- Job Offers Section -->
-        <section id="empleo">
-            <h2>💼 Ofertas de Empleo Gastronómico</h2>
-            <p>Encuentra las mejores oportunidades laborales en el sector gastronómico del Táchira</p>
-
-            <div class="card-grid">
-                <div class="card job-card">
-                    <h3>Chef Ejecutivo</h3>
-                    <p><strong>Restaurante La Casa del Mute</strong> - San Cristóbal</p>
-                    <p class="salary">Salario: $800 - $1,200 mensuales</p>
-                    <p>Buscamos chef con experiencia en cocina tradicional tachirense e internacional. Responsabilidades incluyen creación de menús, supervisión de cocina y control de calidad.</p>
-                    <ul class="requirements">
-                        <li>Experiencia mínima 5 años</li>
-                        <li>Conocimiento de cocina andina</li>
-                        <li>Disponibilidad de horario</li>
-                        <li>Liderazgo de equipo</li>
-                    </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
+        <!-- Cocina Tachirense Section with Filters -->
+        <section id="cocina">
+            <h2>🍳 Cocina Tachirense</h2>
+            <p>Explora el índice del libro "Cocina Tachirense" 3.0 con nuestro sistema de filtros avanzado</p>
+            
+            <div class="filters-container">
+                <div class="filters-title">🔍 Filtrar Recetas</div>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="filterPlato">Plato</label>
+                        <select id="filterPlato">
+                            <option value="">Todos los platos</option>
+                            <option value="sopa">Sopas y Caldos</option>
+                            <option value="principal">Platos Principales</option>
+                            <option value="acompanamiento">Acompañamientos</option>
+                            <option value="postre">Postres</option>
+                            <option value="panaderia">Panadería</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterIngrediente">Ingrediente Principal</label>
+                        <select id="filterIngrediente">
+                            <option value="">Todos los ingredientes</option>
+                            <option value="maiz">Maíz</option>
+                            <option value="carne">Carne de Res</option>
+                            <option value="pollo">Pollo/Gallina</option>
+                            <option value="cerdo">Cerdo</option>
+                            <option value="papa">Papa</option>
+                            <option value="queso">Queso</option>
+                            <option value="panela">Panela</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDificultad">Dificultad</label>
+                        <select id="filterDificultad">
+                            <option value="">Todas</option>
+                            <option value="facil">Fácil</option>
+                            <option value="media">Media</option>
+                            <option value="dificil">Difícil</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterOcasion">Ocasión</label>
+                        <select id="filterOcasion">
+                            <option value="">Todas las ocasiones</option>
+                            <option value="diaria">Comida Diaria</option>
+                            <option value="festiva">Festividades</option>
+                            <option value="navidad">Navidad</option>
+                            <option value="domingo">Domingo Familiar</option>
+                            <option value="celebracion">Celebraciones</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterTiempo">Tiempo de Preparación</label>
+                        <select id="filterTiempo">
+                            <option value="">Cualquier tiempo</option>
+                            <option value="rapido">Menos de 30 min</option>
+                            <option value="medio">30-60 min</option>
+                            <option value="largo">Más de 1 hora</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="card job-card">
-                    <h3>Cocinero/a Tradicional</h3>
-                    <p><strong>Posada El Rincón Tachirense</strong> - Táriba</p>
-                    <p class="salary">Salario: $400 - $600 mensuales</p>
-                    <p>Preparación de platos típicos: mute, hallacas, arepas, sancochos. Ambiente familiar y tradicional.</p>
-                    <ul class="requirements">
-                        <li>Experiencia en cocina tradicional</li>
-                        <li>Responsabilidad y puntualidad</li>
-                        <li>Trabajo en equipo</li>
-                    </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
+                <div class="filter-actions">
+                    <button class="filter-btn" id="applyFilters">Aplicar Filtros</button>
+                    <button class="filter-btn reset" id="resetFilters">Limpiar Filtros</button>
                 </div>
+            </div>
 
-                <div class="card job-card">
-                    <h3>Gerente de Restaurante</h3>
-                    <p><strong>Café del Valle</strong> - La Grita</p>
-                    <p class="salary">Salario: $600 - $900 mensuales + comisiones</p>
-                    <p>Gestión completa del restaurante, atención al cliente, control de inventario y personal.</p>
-                    <ul class="requirements">
-                        <li>Experiencia en gerencia 3 años</li>
-                        <li>Conocimientos de administración</li>
-                        <li>Inglés intermedio</li>
-                        <li>Excelente atención al cliente</li>
-                    </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="indice">Índice del Libro</button>
+                    <button class="tab-btn" data-tab="recetas">Recetas Destacadas</button>
+                    <button class="tab-btn" data-tab="tecnicas">Técnicas Tradicionales</button>
                 </div>
-
-                <div class="card job-card">
-                    <h3>Panadero/a Artesanal</h3>
-                    <p><strong>Panadería Las Cumbres</strong> - San Cristóbal</p>
-                    <p class="salary">Salario: $350 - $500 mensuales</p>
-                    <p>Elaboración de pan tachirense, almojábanas, quesadillas y otros amasijos tradicionales.</p>
-                    <ul class="requirements">
-                        <li>Experiencia en panadería</li>
-                        <li>Disponibilidad turno mañana</li>
-                        <li>Creatividad y dedicación</li>
+                
+                <div id="indice" class="tab-content active">
+                    <ul class="index-list">
+                        <li><a href="#mute">Mute o Mondongo Tachirense</a> <span class="page-num">p. 24</span></li>
+                        <li><a href="#hallacas">Hallacas Tachirenses</a> <span class="page-num">p. 42</span></li>
+                        <li><a href="#pan">Pan Tachirense y Amasijos</a> <span class="page-num">p. 68</span></li>
+                        <li><a href="#pizca">Pizca Andina</a> <span class="page-num">p. 31</span></li>
+                        <li><a href="#sancocho">Sancocho Tachirense</a> <span class="page-num">p. 38</span></li>
+                        <li><a href="#dulces">Dulces Tradicionales</a> <span class="page-num">p. 112</span></li>
+                        <li><a href="#licores">Licores y Bebidas</a> <span class="page-num">p. 135</span></li>
+                        <li><a href="#conservas">Conservas y Encurtidos</a> <span class="page-num">p. 148</span></li>
                     </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
                 </div>
-
-                <div class="card job-card">
-                    <h3>Guía Gastronómico</h3>
-                    <p><strong>Turismo Táchira</strong> - Todo el estado</p>
-                    <p class="salary">Salario: $500 - $700 mensuales + propinas</p>
-                    <p>Conducción de rutas gastronómicas, explicación de historia culinaria y tradiciones del Táchira.</p>
-                    <ul class="requirements">
-                        <li>Licencia de conducir</li>
-                        <li>Conocimiento de la región</li>
-                        <li>Idioma inglés (deseable)</li>
-                        <li>Carisma y comunicación</li>
-                    </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
+                
+                <div id="recetas" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card recipe-card">
+                            <h3>Mute Tachirense</h3>
+                            <div class="recipe-meta">
+                                <div>⏱️ 3-4 horas</div>
+                                <div>👥 6-8 personas</div>
+                                <div class="difficulty media">Dificultad: Media</div>
+                                <div>🎄 Ocasión: Domingos/Festividades</div>
+                            </div>
+                            <p>Sopa tradicional con callo, libro, maíz, garbanzos y auyama villorra</p>
+                            <div class="tags-container">
+                                <span class="tag">Sopa</span>
+                                <span class="tag">Tradicional</span>
+                                <span class="tag">Proteína</span>
+                            </div>
+                            <ul class="ingredients-list">
+                                <li>Callo y libro de res</li>
+                                <li>Maíz blanco pilado</li>
+                                <li>Garbanzos remojados</li>
+                                <li>Auyama villorra</li>
+                                <li>Cilantrón y cilantro</li>
+                            </ul>
+                            <button class="view-recipe-btn">Ver Receta Completa</button>
+                        </div>
+                        
+                        <div class="card recipe-card">
+                            <h3>Hallacas Tachirenses</h3>
+                            <div class="recipe-meta">
+                                <div>⏱️ 5-6 horas</div>
+                                <div>👥 10-12 personas</div>
+                                <div class="difficulty dificil">Dificultad: Difícil</div>
+                                <div>🎄 Ocasión: Navidad</div>
+                            </div>
+                            <p>El plato navideño tradicional del Táchira con masa de maíz pilado</p>
+                            <div class="tags-container">
+                                <span class="tag">Navideño</span>
+                                <span class="tag">Tradicional</span>
+                                <span class="tag">Festivo</span>
+                            </div>
+                            <ul class="ingredients-list">
+                                <li>Masa de maíz pilado</li>
+                                <li>Carne de gallina y pernil</li>
+                                <li>Garbanzos y alcaparras</li>
+                                <li>Pasas y aceitunas</li>
+                                <li>Hoja de plátano</li>
+                            </ul>
+                            <button class="view-recipe-btn">Ver Receta Completa</button>
+                        </div>
+                        
+                        <div class="card recipe-card">
+                            <h3>Pan Tachirense</h3>
+                            <div class="recipe-meta">
+                                <div>⏱️ 2.5 horas</div>
+                                <div>👥 8-10 personas</div>
+                                <div class="difficulty media">Dificultad: Media</div>
+                                <div>🍞 Ocasión: Desayuno/Merienda</div>
+                            </div>
+                            <p>El famoso pan andino, el mejor de Venezuela, con panela rallada</p>
+                            <div class="tags-container">
+                                <span class="tag">Panadería</span>
+                                <span class="tag">Tradicional</span>
+                                <span class="tag">Desayuno</span>
+                            </div>
+                            <ul class="ingredients-list">
+                                <li>Harina de trigo</li>
+                                <li>Panela rallada</li>
+                                <li>Huevos frescos</li>
+                                <li>Mantequilla</li>
+                                <li>Suero o talbina</li>
+                            </ul>
+                            <button class="view-recipe-btn">Ver Receta Completa</button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="card job-card">
-                    <h3>Ayudante de Cocina</h3>
-                    <p><strong>Restaurante El Fogón de la Abuela</strong> - Rubio</p>
-                    <p class="salary">Salario: $300 - $400 mensuales</p>
-                    <p>Apoyo en preparación de alimentos, limpieza y organización de cocina. Ideal para iniciar en el sector.</p>
-                    <ul class="requirements">
-                        <li>Sin experiencia requerida</li>
-                        <li>Ganas de aprender</li>
-                        <li>Responsabilidad</li>
-                        <li>Trabajo bajo presión</li>
-                    </ul>
-                    <a href="#" class="apply-btn">Aplicar Ahora</a>
+                
+                <div id="tecnicas" class="tab-content">
+                    <div class="card">
+                        <h3>Técnicas Culinarias Tradicionales</h3>
+                        <ul class="index-list">
+                            <li><strong>Pilado del maíz:</strong> Proceso tradicional para obtener harina de maíz</li>
+                            <li><strong>Cocción en fogón de leña:</strong> Método ancestral para realzar sabores</li>
+                            <li><strong>Elaboración de panela:</strong> Transformación de la caña de azúcar</li>
+                            <li><strong>Conservación en salmuera:</strong> Técnica para encurtidos y carnes</li>
+                            <li><strong>Amasijo tradicional:</strong> Secretos para panes y almojábanas perfectos</li>
+                            <li><strong>Preparación de caldos:</strong> Base de la cocina tachirense</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gastronomic Routes Section -->
-        <section id="rutas">
-            <h2>🗺️ Rutas Gastronómicas del Táchira</h2>
-            <p>Explora las mejores rutas culinarias y descubre los sabores auténticos de nuestra tierra</p>
-
-            <div class="card-grid">
-                <div class="card route-card">
-                    <h3>Ruta del Mute y Mondongo</h3>
-                    <p><strong>Recorrido:</strong> San Cristóbal - Táriba - La Concordia</p>
-                    <span class="route-duration">⏱️ Duración: 4 horas</span>
-                    <p>Descubre los mejores lugares para probar el auténtico mute tachirense y mondongo. Visita mercados tradicionales y restaurantes familiares.</p>
-                    <div class="recipe-preview">
-                        <h4>Plato Estrella: Mute Tachirense</h4>
-                        <p>Sopa tradicional con callo, libro, maíz, garbanzos y auyama villorra</p>
-                    </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
+        <!-- Panadería Section -->
+        <section id="panaderia">
+            <h2>🥖 Panadería Tachirense</h2>
+            <p>Descubre el arte del pan y los licores tradicionales del Táchira</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="indice-pan">Índice del Libro del Pan</button>
+                    <button class="tab-btn" data-tab="indice-licores">Índice de Licores</button>
+                    <button class="tab-btn" data-tab="panaderias">Panaderías Destacadas</button>
                 </div>
-
-                <div class="card route-card">
-                    <h3>Ruta del Pan Tachirense</h3>
-                    <p><strong>Recorrido:</strong> San Cristóbal - Capacho - La Grita</p>
-                    <span class="route-duration">⏱️ Duración: 6 horas</span>
-                    <p>Visita las panaderías más tradicionales y conoce el proceso de elaboración del pan tachirense, almojábanas y quesadillas.</p>
-                    <div class="recipe-preview">
-                        <h4>Productos: Pan Aliñado, Almojábanas, Quesadillas</h4>
-                        <p>Elaborados con técnicas tradicionales transmitidas por generaciones</p>
-                    </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
+                
+                <div id="indice-pan" class="tab-content active">
+                    <ul class="index-list">
+                        <li><a href="#pan-tradicional">Pan Tachirense Tradicional</a> <span class="page-num">p. 12</span></li>
+                        <li><a href="#almojabanas">Almojábanas y Quesadillas</a> <span class="page-num">p. 28</span></li>
+                        <li><a href="#pan-aliñado">Pan Aliñado y Pan de Yuca</a> <span class="page-num">p. 35</span></li>
+                        <li><a href="#dulces-panaderia">Dulces de Panadería</a> <span class="page-num">p. 47</span></li>
+                        <li><a href="#tecnicas-pan">Técnicas de Horneo Tradicional</a> <span class="page-num">p. 56</span></li>
+                        <li><a href="#ingredientes-pan">Ingredientes Autóctonos</a> <span class="page-num">p. 63</span></li>
+                    </ul>
                 </div>
-
-                <div class="card route-card">
-                    <h3>Ruta de la Hallaca</h3>
-                    <p><strong>Recorrido:</strong> San Cristóbal - Michelena - Seboruco</p>
-                    <span class="route-duration">⏱️ Duración: 5 horas</span>
-                    <p>Conoce la historia y preparación de las hallacas tachirenses. Visita talleres de elaboración y degusta diferentes variedades.</p>
-                    <div class="recipe-preview">
-                        <h4>Variedades: Hallaca Tradicional, Hallaca de Gallina, Hallaca Vegetariana</h4>
-                        <p>Cada familia tiene su receta secreta transmitida por generaciones</p>
-                    </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
+                
+                <div id="indice-licores" class="tab-content">
+                    <ul class="index-list">
+                        <li><a href="#chimo">Chimó Tradicional</a> <span class="page-num">p. 72</span></li>
+                        <li><a href="#aguardiente">Aguardiente de Caña</a> <span class="page-num">p. 78</span></li>
+                        <li><a href="#cervezas-artesanales">Cervezas Artesanales</a> <span class="page-num">p. 85</span></li>
+                        <li><a href="#vinos-frutales">Vinos de Frutas Andinas</a> <span class="page-num">p. 91</span></li>
+                        <li><a href="#preparacion-licores">Métodos de Preparación</a> <span class="page-num">p. 97</span></li>
+                    </ul>
                 </div>
-
-                <div class="card route-card">
-                    <h3>Ruta del Café y Chocolate</h3>
-                    <p><strong>Recorrido:</strong> Rubio - San Simón - Umuquena</p>
-                    <span class="route-duration">⏱️ Duración: 8 horas (día completo)</span>
-                    <p>Recorre fincas cafetaleras, conoce el proceso de producción del café tachirense y degusta chocolates artesanales.</p>
-                    <div class="recipe-preview">
-                        <h4>Productos: Café Tachirense, Chocolate de Chorote, Tabletas de Cacao</h4>
-                        <p>El mejor café de altura y cacao porcelana del mundo</p>
+                
+                <div id="panaderias" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Panadería Las Cumbres</h3>
+                            <p><strong>Ubicación:</strong> San Cristóbal, Pasaje Acueducto</p>
+                            <p>Fundada en 1961 por Sebastián Alviarez y María Novoa. Tradición panadera tachirense.</p>
+                            <p><strong>Especialidades:</strong> Pan Tachirense, Almojábanas, Quesadillas</p>
+                            <p><strong>Horario:</strong> Lun-Sab 5:00 am - 7:00 pm</p>
+                            <span class="tag">Tradicional</span>
+                            <span class="tag">Familiar</span>
+                            <span class="tag">$</span>
+                        </div>
+                        <div class="card">
+                            <h3>Panadería El Molino de la Abuela</h3>
+                            <p><strong>Ubicación:</strong> Táriba, Calle Principal</p>
+                            <p>Elaboración artesanal con recetas familiares transmitidas por tres generaciones.</p>
+                            <p><strong>Especialidades:</strong> Pan Aliñado, Dulces de Leche, Roscas</p>
+                            <p><strong>Horario:</strong> Mar-Dom 6:00 am - 6:00 pm</p>
+                            <span class="tag">Artesanal</span>
+                            <span class="tag">Recetas Familiares</span>
+                            <span class="tag">$</span>
+                        </div>
+                        <div class="card">
+                            <h3>Panadería Los Andes</h3>
+                            <p><strong>Ubicación:</strong> La Grita, Plaza Bolívar</p>
+                            <p>Panes elaborados con trigo de la región y panela tachirense.</p>
+                            <p><strong>Especialidades:</strong> Pan de Yuca, Almojábanas, Pan de Queso</p>
+                            <p><strong>Horario:</strong> Lun-Sab 5:30 am - 7:30 pm</p>
+                            <span class="tag">Regional</span>
+                            <span class="tag">Ingredientes Locales</span>
+                            <span class="tag">$$</span>
+                        </div>
                     </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
-                </div>
-
-                <div class="card route-card">
-                    <h3>Ruta de los Dulces Tradicionales</h3>
-                    <p><strong>Recorrido:</strong> San Cristóbal - Palmira - Cordero</p>
-                    <span class="route-duration">⏱️ Duración: 5 horas</span>
-                    <p>Visita dulcerías artesanales y conoce la elaboración de melcochas, alfondoques, cocadas y dulces de lechosa.</p>
-                    <div class="recipe-preview">
-                        <h4>Dulces: Melcochas, Alfondoques, Dulce de Lechosa, Cocadas</h4>
-                        <p>Endulzados con panela tachirense y miel de abejas</p>
-                    </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
-                </div>
-
-                <div class="card route-card">
-                    <h3>Ruta del Queso y Lácteos</h3>
-                    <p><strong>Recorrido:</strong> Pregonero - La Fría - Colón</p>
-                    <span class="route-duration">⏱️ Duración: 7 horas</span>
-                    <p>Conoce las queseras tradicionales y el proceso de elaboración del queso de mano, cuajada y otros derivados lácteos.</p>
-                    <div class="recipe-preview">
-                        <h4>Productos: Queso de Mano, Cuajada, Natillas, Mantequilla</h4>
-                        <p>Elaborados con leche fresca de vacas de la región</p>
-                    </div>
-                    <a href="#" class="apply-btn">Ver Detalles del Recorrido</a>
                 </div>
             </div>
         </section>
 
-        <!-- Restaurants Section -->
-        <section id="restaurantes">
-            <h2>🍽️ Restaurantes Recomendados</h2>
-            <p>Los mejores establecimientos gastronómicos del Táchira</p>
-
+        <!-- Licores Section -->
+        <section id="licores">
+            <h2>🥃 Licores Tachirenses</h2>
+            <p>Bebidas tradicionales que complementan nuestra gastronomía</p>
+            
             <div class="card-grid">
                 <div class="card">
-                    <h3>Restaurante La Casa del Mute</h3>
-                    <p><strong>Ubicación:</strong> San Cristóbal, Av. España</p>
-                    <p><strong>Especialidad:</strong> Mute, Mondongo, Sancocho Tachirense</p>
-                    <p>Restaurante familiar con más de 30 años de tradición. Ambiente rústico y acogedor.</p>
-                    <p><strong>Horario:</strong> Lun-Dom 7:00 am - 9:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Tradicional</span>
-                    <span class="tag">Familiar</span>
-                    <span class="tag">$$</span>
+                    <h3>🍶 Tradicionales</h3>
+                    <ul class="index-list">
+                        <li><strong>Chimó:</strong> Bebida ancestral de maíz fermentado</li>
+                        <li><strong>Aguardiente de Caña:</strong> Destilado artesanal de la región</li>
+                        <li><strong>Guarapo de Piña:</strong> Bebida fermentada de piña y panela</li>
+                        <li><strong>Vino de Mora:</strong> Elaborado con frutos andinos</li>
+                        <li><strong>Chicha Andina:</strong> Bebida de maíz con especias</li>
+                    </ul>
                 </div>
-
                 <div class="card">
-                    <h3>Panadería Las Cumbres</h3>
-                    <p><strong>Ubicación:</strong> San Cristóbal, Pasaje Acueducto</p>
-                    <p><strong>Especialidad:</strong> Pan Tachirense, Almojábanas, Quesadillas</p>
-                    <p>Fundada en 1961 por Sebastián Alviarez y María Novoa. Tradición panadera tachirense.</p>
-                    <p><strong>Horario:</strong> Lun-Sab 5:00 am - 7:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Panadería</span>
-                    <span class="tag">Tradicional</span>
-                    <span class="tag">$</span>
+                    <h3>🍺 Cervezas Artesanales</h3>
+                    <ul class="index-list">
+                        <li><strong>Cerveza de Trigo Andino:</strong> Elaborada con trigo local</li>
+                        <li><strong>Cerveza de Café:</strong> Fusión única con café tachirense</li>
+                        <li><strong>Cerveza de Panela:</strong> Sabor dulce y único</li>
+                        <li><strong>Cerveza de Frutos Rojos:</strong> Con moras y fresas de la región</li>
+                    </ul>
                 </div>
-
                 <div class="card">
-                    <h3>Restaurante El Sol de Media Noche</h3>
-                    <p><strong>Ubicación:</strong> San Cristóbal, Carrera 5</p>
-                    <p><strong>Especialidad:</strong> Tostadas de Arepa, Mute, Comida Nocturna</p>
-                    <p>Famoso por sus tostadas de arepa rellenas de queso. Tradición desde los años 40.</p>
-                    <p><strong>Horario:</strong> Mar-Dom 6:00 pm - 2:00 am</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Nocturno</span>
-                    <span class="tag">Tradicional</span>
-                    <span class="tag">$$</span>
+                    <h3>🥤 Chimó y Bebidas No Alcohólicas</h3>
+                    <ul class="index-list">
+                        <li><strong>Chimó Tradicional:</strong> Receta ancestral de fermentación</li>
+                        <li><strong>Chimó de Frutas:</strong> Variantes con piña, mora y fresa</li>
+                        <li><strong>Jugos Andinos:</strong> Combinaciones únicas de frutas de altura</li>
+                        <li><strong>Chocolate Caliente Tachirense:</strong> Con especias locales</li>
+                    </ul>
                 </div>
+            </div>
+        </section>
 
-                <div class="card">
-                    <h3>Posada El Rincón Tachirense</h3>
-                    <p><strong>Ubicación:</strong> Táriba, Calle Principal</p>
-                    <p><strong>Especialidad:</strong> Hallacas, Arepas, Comida Tachirense</p>
-                    <p>Ambiente campestre y familiar. Perfecto para degustar la auténtica cocina tachirense.</p>
-                    <p><strong>Horario:</strong> Lun-Dom 8:00 am - 8:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Posada</span>
-                    <span class="tag">Familiar</span>
-                    <span class="tag">$$</span>
+        <!-- Charcutería Section -->
+        <section id="charcuteria">
+            <h2>🥓 Charcutería Tachirense</h2>
+            <p>Productos cárnicos tradicionales y reconocimientos del sector</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="indice-char">Índice</button>
+                    <button class="tab-btn" data-tab="reconocimientos">Reconocimientos</button>
+                    <button class="tab-btn" data-tab="recetas-char">Recetas</button>
                 </div>
+                
+                <div id="indice-char" class="tab-content active">
+                    <ul class="index-list">
+                        <li><a href="#embutidos">Embutidos Tradicionales</a> <span class="page-num">p. 102</span></li>
+                        <li><a href="#jamones">Jamones y Tocinetas</a> <span class="page-num">p. 115</span></li>
+                        <li><a href="#chorizos">Chorizos y Morcillas</a> <span class="page-num">p. 123</span></li>
+                        <li><a href="#tecnicas-conservacion">Técnicas de Conservación</a> <span class="page-num">p. 131</span></li>
+                        <li><a href="#ingredientes-char">Ingredientes y Especias</a> <span class="page-num">p. 138</span></li>
+                    </ul>
+                </div>
+                
+                <div id="reconocimientos" class="tab-content">
+                    <div class="card">
+                        <h3>Reconocimientos del Sector</h3>
+                        <ul class="index-list">
+                            <li><strong>Denominación de Origen:</strong> Jamón del Táchira (2018)</li>
+                            <li><strong>Premio Nacional de Gastronomía:</strong> Charcutería Andina (2020)</li>
+                            <li><strong>Sello de Calidad Artesanal:</strong> Otorgado a 12 productores locales</li>
+                            <li><strong>Patrimonio Cultural Inmaterial:</strong> Técnicas de embutidos tachirenses</li>
+                            <li><strong>Reconocimiento Internacional:</strong> Feria Iberoamericana de Gastronomía (2022)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="recetas-char" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Chorizo Tachirense</h3>
+                            <p>Elaborado con carne de cerdo, ajo, comino y especias locales</p>
+                            <div class="tags-container">
+                                <span class="tag">Embutido</span>
+                                <span class="tag">Tradicional</span>
+                                <span class="tag">Ahumado</span>
+                            </div>
+                            <p><strong>Tiempo:</strong> 3 días de curación</p>
+                            <p><strong>Uso:</strong> Asados, guisos, acompañamientos</p>
+                            <button class="view-recipe-btn">Ver Proceso de Elaboración</button>
+                        </div>
+                        <div class="card">
+                            <h3>Jamón de Montaña</h3>
+                            <p>Curado naturalmente en las montañas del Táchira</p>
+                            <div class="tags-container">
+                                <span class="tag">Premium</span>
+                                <span class="tag">Curado</span>
+                                <span class="tag">Denominación de Origen</span>
+                            </div>
+                            <p><strong>Tiempo:</strong> 6-8 meses de curación</p>
+                            <p><strong>Uso:</strong> Tablas de quesos, platos gourmet</p>
+                            <button class="view-recipe-btn">Ver Proceso de Elaboración</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="card">
-                    <h3>Café del Valle</h3>
-                    <p><strong>Ubicación:</strong> La Grita, Plaza Bolívar</p>
-                    <p><strong>Especialidad:</strong> Café Tachirense, Chocolate, Postres</p>
-                    <p>Café de especialidad con vista panorámica al valle. Ambiente colonial.</p>
-                    <p><strong>Horario:</strong> Mar-Dom 7:00 am - 6:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Café</span>
-                    <span class="tag">Vista Panorámica</span>
-                    <span class="tag">$$</span>
+        <!-- Dulces Tachirenses Section -->
+        <section id="dulces">
+            <h2>🍬 Dulces Tachirenses</h2>
+            <p>Dulzura tradicional elaborada con panela y frutas de la región</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="indice-dulces">Índice</button>
+                    <button class="tab-btn" data-tab="tipos-dulces">Tipos de Dulces</button>
+                    <button class="tab-btn" data-tab="fabricantes">Fabricantes Destacados</button>
                 </div>
+                
+                <div id="indice-dulces" class="tab-content active">
+                    <ul class="index-list">
+                        <li><a href="#melcochas">Melcochas y Alfondoques</a> <span class="page-num">p. 152</span></li>
+                        <li><a href="#dulce-lechosa">Dulce de Lechosa</a> <span class="page-num">p. 159</span></li>
+                        <li><a href="#cocadas">Cocadas y Conservas</a> <span class="page-num">p. 165</span></li>
+                        <li><a href="#panela">Productos de Panela</a> <span class="page-num">p. 172</span></li>
+                        <li><a href="#tecnicas-dulces">Técnicas de Elaboración</a> <span class="page-num">p. 178</span></li>
+                    </ul>
+                </div>
+                
+                <div id="tipos-dulces" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>🍯 Dulces de Panela</h3>
+                            <ul class="index-list">
+                                <li>Melcochas tradicionales</li>
+                                <li>Alfondoques de coco</li>
+                                <li>Dulce de lechosa con clavos</li>
+                                <li>Cocadas de piña</li>
+                                <li>Bocadillos de guayaba</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>🍓 Conservas y Dulces de Fruta</h3>
+                            <ul class="index-list">
+                                <li>Conserva de mora</li>
+                                <li>Dulce de fresa andina</li>
+                                <li>Mermelada de curuba</li>
+                                <li>Conserva de higo</li>
+                                <li>Dulce de toronja</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>🥥 Dulces de Coco y Leche</h3>
+                            <ul class="index-list">
+                                <li>Cocadas tradicionales</li>
+                                <li>Dulce de leche tachirense</li>
+                                <li>Arequipe andino</li>
+                                <li>Manjar blanco</li>
+                                <li>Dulce de cuajada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="fabricantes" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Dulcería La Melcochera</h3>
+                            <p><strong>Ubicación:</strong> San Cristóbal, Mercado Principal</p>
+                            <p>Dulces artesanales elaborados con panela tachirense. Tradición familiar desde 1945.</p>
+                            <p><strong>Especialidades:</strong> Melcochas, Alfondoques, Dulce de Lechosa</p>
+                            <p><strong>Horario:</strong> Lun-Sab 8:00 am - 6:00 pm</p>
+                            <span class="tag">Artesanal</span>
+                            <span class="tag">Familiar</span>
+                            <span class="tag">$</span>
+                        </div>
+                        <div class="card">
+                            <h3>Dulces Doña Emilia</h3>
+                            <p><strong>Ubicación:</strong> Táriba, Calle Comercio</p>
+                            <p>Recetas transmitidas por tres generaciones. Elaboración 100% artesanal.</p>
+                            <p><strong>Especialidades:</strong> Cocadas, Conservas de Fruta, Panelitas</p>
+                            <p><strong>Horario:</strong> Mar-Dom 9:00 am - 5:00 pm</p>
+                            <span class="tag">Tradicional</span>
+                            <span class="tag">Recetas Ancestrales</span>
+                            <span class="tag">$</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="card">
-                    <h3>Restaurante El Fogón de la Abuela</h3>
-                    <p><strong>Ubicación:</strong> Rubio, Av. Principal</p>
-                    <p><strong>Especialidad:</strong> Comidas Caseras, Sopas, Guisos</p>
-                    <p>Comida casera preparada con recetas tradicionales. Ambiente hogareño.</p>
-                    <p><strong>Horario:</strong> Lun-Sab 11:00 am - 8:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Casero</span>
-                    <span class="tag">Económico</span>
-                    <span class="tag">$</span>
+        <!-- Ofertas Gastronómicas Section -->
+        <section id="ofertas">
+            <h2>💼 Ofertas Gastronómicas</h2>
+            <p>Conecta con el sector gastronómico: restaurantes, empleo, formación y proveedores</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="restaurantes">Índice de Restaurantes</button>
+                    <button class="tab-btn" data-tab="empleo">Ofertas de Empleo</button>
+                    <button class="tab-btn" data-tab="capacitacion">Capacitación Gastronómica</button>
+                    <button class="tab-btn" data-tab="proveedores">Proveedores</button>
                 </div>
+                
+                <div id="restaurantes" class="tab-content active">
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Restaurante La Casa del Mute</h3>
+                            <p><strong>Ubicación:</strong> San Cristóbal, Av. España</p>
+                            <p><strong>Especialidad:</strong> Mute, Mondongo, Sancocho Tachirense</p>
+                            <p>Restaurante familiar con más de 30 años de tradición.</p>
+                            <span class="tag">Tradicional</span>
+                            <span class="tag">Familiar</span>
+                            <span class="tag">$$</span>
+                        </div>
+                        <div class="card">
+                            <h3>Posada El Rincón Tachirense</h3>
+                            <p><strong>Ubicación:</strong> Táriba, Calle Principal</p>
+                            <p><strong>Especialidad:</strong> Hallacas, Arepas, Comida Tachirense</p>
+                            <p>Ambiente campestre y familiar.</p>
+                            <span class="tag">Posada</span>
+                            <span class="tag">Familiar</span>
+                            <span class="tag">$$</span>
+                        </div>
+                        <div class="card">
+                            <h3>Café del Valle</h3>
+                            <p><strong>Ubicación:</strong> La Grita, Plaza Bolívar</p>
+                            <p><strong>Especialidad:</strong> Café Tachirense, Chocolate, Postres</p>
+                            <p>Café de especialidad con vista panorámica al valle.</p>
+                            <span class="tag">Café</span>
+                            <span class="tag">Vista Panorámica</span>
+                            <span class="tag">$$</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="empleo" class="tab-content">
+                    <div class="card-grid">
+                        <div class="card job-card">
+                            <h3>Chef Ejecutivo</h3>
+                            <p><strong>Restaurante La Casa del Mute</strong> - San Cristóbal</p>
+                            <p class="salary">Salario: $800 - $1,200 mensuales</p>
+                            <p>Buscamos chef con experiencia en cocina tradicional tachirense e internacional.</p>
+                            <ul class="requirements">
+                                <li>Experiencia mínima 5 años</li>
+                                <li>Conocimiento de cocina andina</li>
+                                <li>Disponibilidad de horario</li>
+                            </ul>
+                            <button class="apply-btn">Aplicar Ahora</button>
+                        </div>
+                        <div class="card job-card">
+                            <h3>Cocinero/a Tradicional</h3>
+                            <p><strong>Posada El Rincón Tachirense</strong> - Táriba</p>
+                            <p class="salary">Salario: $400 - $600 mensuales</p>
+                            <p>Preparación de platos típicos: mute, hallacas, arepas, sancochos.</p>
+                            <ul class="requirements">
+                                <li>Experiencia en cocina tradicional</li>
+                                <li>Responsabilidad y puntualidad</li>
+                                <li>Trabajo en equipo</li>
+                            </ul>
+                            <button class="apply-btn">Aplicar Ahora</button>
+                        </div>
+                        <div class="card job-card">
+                            <h3>Guía Gastronómico</h3>
+                            <p><strong>Turismo Táchira</strong> - Todo el estado</p>
+                            <p class="salary">Salario: $500 - $700 mensuales + propinas</p>
+                            <p>Conducción de rutas gastronómicas, explicación de historia culinaria.</p>
+                            <ul class="requirements">
+                                <li>Licencia de conducir</li>
+                                <li>Conocimiento de la región</li>
+                                <li>Carisma y comunicación</li>
+                            </ul>
+                            <button class="apply-btn">Aplicar Ahora</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="capacitacion" class="tab-content">
+                    <div class="formation-grid">
+                        <div class="formation-card">
+                            <h4>🎓 Escuelas de Gastronomía</h4>
+                            <ul>
+                                <li>Instituto Gastronómico del Táchira</li>
+                                <li>Escuela de Cocina Andina "Doña Leonor"</li>
+                                <li>Centro de Formación Turística del Táchira</li>
+                                <li>Talleres de Cocina Tradicional (Municipales)</li>
+                            </ul>
+                        </div>
+                        <div class="formation-card">
+                            <h4>📚 Cursos y Certificaciones</h4>
+                            <ul>
+                                <li>Cocina Tradicional Tachirense (40 horas)</li>
+                                <li>Panadería Artesanal Andina (60 horas)</li>
+                                <li>Elaboración de Dulces con Panela (30 horas)</li>
+                                <li>Gestión de Restaurantes Familiares (50 horas)</li>
+                            </ul>
+                        </div>
+                        <div class="formation-card">
+                            <h4>🎬 Recursos Educativos</h4>
+                            <ul>
+                                <li>Documental: "Sabores del Táchira"</li>
+                                <li>Serie: "Cocineras Populares"</li>
+                                <li>Guía Digital: Técnicas Ancestrales</li>
+                                <li>Podcast: "Historias de Nuestra Cocina"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="proveedores" class="tab-content">
+                    <div class="commercial-grid">
+                        <div class="commercial-category">
+                            <h4>🥬 Productos Frescos</h4>
+                            <ul>
+                                <li><a href="#">Verduras y Vegetales de Altura</a></li>
+                                <li><a href="#">Carnes Certificadas del Táchira</a></li>
+                                <li><a href="#">Quesos Artesanales</a></li>
+                                <li><a href="#">Panela y Derivados</a></li>
+                            </ul>
+                        </div>
+                        <div class="commercial-category">
+                            <h4>📦 Productos Procesados</h4>
+                            <ul>
+                                <li><a href="#">Panes y Amasijos</a></li>
+                                <li><a href="#">Dulces y Conservas</a></li>
+                                <li><a href="#">Charcutería Tradicional</a></li>
+                                <li><a href="#">Café y Cacao Premium</a></li>
+                            </ul>
+                        </div>
+                        <div class="commercial-category">
+                            <h4>🛒 Compra Online</h4>
+                            <ul>
+                                <li><a href="#">La Bodega del Táchira</a></li>
+                                <li><a href="#">Mercado Gastronómico Virtual</a></li>
+                                <li><a href="#">Delivery de Productos Regionales</a></li>
+                                <li><a href="#">Suscripción: Sabores del Mes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="card">
-                    <h3>Dulcería La Melcochera</h3>
-                    <p><strong>Ubicación:</strong> San Cristóbal, Mercado Principal</p>
-                    <p><strong>Especialidad:</strong> Melcochas, Alfondoques, Dulces Tradicionales</p>
-                    <p>Dulces artesanales elaborados con panela tachirense. Tradición familiar.</p>
-                    <p><strong>Horario:</strong> Lun-Sab 8:00 am - 6:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Dulces</span>
-                    <span class="tag">Artesanal</span>
-                    <span class="tag">$</span>
+        <!-- Formación Section -->
+        <section id="formacion">
+            <h2>🎓 Formación Gastronómica</h2>
+            <p>Recursos educativos para preservar y difundir la cocina tachirense</p>
+            
+            <div class="formation-grid">
+                <div class="formation-card">
+                    <h4>🏫 Escuelas e Instituciones</h4>
+                    <ul>
+                        <li><strong>Instituto Gastronómico del Táchira:</strong> Carreras técnicas en cocina tradicional</li>
+                        <li><strong>Universidad Nacional Experimental del Táchira:</strong> Diplomados en gastronomía andina</li>
+                        <li><strong>SENA Táchira:</strong> Cursos cortos de panadería y repostería</li>
+                        <li><strong>Escuelas Municipales:</strong> Talleres comunitarios de cocina</li>
+                    </ul>
                 </div>
+                <div class="formation-card">
+                    <h4>📚 Libros y Publicaciones</h4>
+                    <ul>
+                        <li><strong>"La Cocina Tachirense"</strong> - Leonor Peña (Ed. 2005)</li>
+                        <li><strong>"El Pan de Nuestros Abuelos"</strong> - Sebastián Alviarez</li>
+                        <li><strong>"Dulces Tradicionales del Táchira"</strong> - María Novoa</li>
+                        <li><strong>"Gastronomía Andina Venezolana"</strong> - Varios Autores</li>
+                        <li><strong>Revista "Sabores del Táchira"</strong> - Publicación trimestral</li>
+                    </ul>
+                </div>
+                <div class="formation-card">
+                    <h4>🎬 Documentales y Multimedia</h4>
+                    <ul>
+                        <li><strong>"Manos que Cocinan Historia"</strong> - Documental sobre cocineras populares</li>
+                        <li><strong>"Rutas del Sabor"</strong> - Serie sobre gastronomía regional</li>
+                        <li><strong>"El Secreto del Pan Tachirense"</strong> - Cortometraje educativo</li>
+                        <li><strong>Canal YouTube "Cocina Tachirense"</strong> - Recetas en video</li>
+                        <li><strong>Podcast "Fogón Andino"</strong> - Historias y recetas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-                <div class="card">
-                    <h3>Restaurante Gourmet Los Andes</h3>
-                    <p><strong>Ubicación:</strong> San Cristóbal, Zona Hotelera</p>
-                    <p><strong>Especialidad:</strong> Cocina Fusión Andina-Internacional</p>
-                    <p>Alta cocina con ingredientes locales. Menú degustación disponible.</p>
-                    <p><strong>Horario:</strong> Mar-Dom 12:00 pm - 10:00 pm</p>
-                    <p><strong>Teléfono:</strong> +58 276-XXX-XXXX</p>
-                    <span class="tag">Gourmet</span>
-                    <span class="tag">Fusión</span>
-                    <span class="tag">$$$</span>
+        <!-- Cocina Tradicional Section -->
+        <section id="tradicional">
+            <h2>👵 Cocina Tradicional</h2>
+            <p>Conoce a las cocineras populares que preservan nuestras raíces culinarias</p>
+            
+            <div class="cooks-grid">
+                <div class="cook-card">
+                    <div style="font-size: 3rem;">👩‍🍳</div>
+                    <div class="cook-name">Doña María "La Mutería"</div>
+                    <div class="cook-specialty">Especialista en Mute y Mondongo</div>
+                    <p>40 años preparando el auténtico mute tachirense en San Cristóbal. Su receta familiar data de 1920.</p>
+                    <span class="tag">Patrimonio Viviente</span>
                 </div>
+                <div class="cook-card">
+                    <div style="font-size: 3rem;">👩‍🍳</div>
+                    <div class="cook-name">Doña Emilia "La Panadera"</div>
+                    <div class="cook-specialty">Maestra Panadera Tradicional</div>
+                    <p>Guardiana de la receta original del pan tachirense. Formó a tres generaciones de panaderos.</p>
+                    <span class="tag">Reconocimiento Nacional</span>
+                </div>
+                <div class="cook-card">
+                    <div style="font-size: 3rem;">👩‍🍳</div>
+                    <div class="cook-name">Doña Rosa "La Dulcera"</div>
+                    <div class="cook-specialty">Artesana de Dulces con Panela</div>
+                    <p>Elabora melcochas y alfondoques con técnicas ancestrales. Sus dulces son famosos en toda la región.</p>
+                    <span class="tag">Artesana Certificada</span>
+                </div>
+                <div class="cook-card">
+                    <div style="font-size: 3rem;">👩‍🍳</div>
+                    <div class="cook-name">Doña Carmen "La Hallaquera"</div>
+                    <div class="cook-specialty">Maestra de Hallacas Tachirenses</div>
+                    <p>Prepara las hallacas más auténticas del Táchira. Su técnica de masa es única y transmitida oralmente.</p>
+                    <span class="tag">Patrimonio Cultural</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Índice Comercial Section -->
+        <section id="comercial">
+            <h2>🛒 Índice Comercial</h2>
+            <p>Directorio de productos, ingredientes y proveedores del sector gastronómico tachirense</p>
+            
+            <div class="commercial-grid">
+                <div class="commercial-category">
+                    <h4>🥬 Productos Frescos</h4>
+                    <ul>
+                        <li><a href="#">Verduras de Altura</a></li>
+                        <li><a href="#">Vegetales Andinos</a></li>
+                        <li><a href="#">Carnes Certificadas</a></li>
+                        <li><a href="#">Pescado de Río</a></li>
+                        <li><a href="#">Huevos Campesinos</a></li>
+                    </ul>
+                </div>
+                <div class="commercial-category">
+                    <h4>🧀 Productos Lácteos y Panes</h4>
+                    <ul>
+                        <li><a href="#">Quesos Artesanales</a></li>
+                        <li><a href="#">Panes Tradicionales</a></li>
+                        <li><a href="#">Mantequilla de Altura</a></li>
+                        <li><a href="#">Cuajada y Natillas</a></li>
+                        <li><a href="#">Suero Tachirense</a></li>
+                    </ul>
+                </div>
+                <div class="commercial-category">
+                    <h4>🍯 Productos Premium</h4>
+                    <ul>
+                        <li><a href="#">Cacao Porcelana</a></li>
+                        <li><a href="#">Café de Altura</a></li>
+                        <li><a href="#">Miel de Abejas Andinas</a></li>
+                        <li><a href="#">Panela Orgánica</a></li>
+                        <li><a href="#">Especias Locales</a></li>
+                    </ul>
+                </div>
+                <div class="commercial-category">
+                    <h4>🛍️ Compra Online</h4>
+                    <ul>
+                        <li><a href="#"><strong>La Bodega del Táchira</strong></a></li>
+                        <li><a href="#">Productos de Venta Online</a></li>
+                        <li><a href="#">Suscripciones Gastronómicas</a></li>
+                        <li><a href="#">Delivery Regional</a></li>
+                        <li><a href="#">Kits de Recetas Tachirenses</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mt-2" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none;">
+                <h3 style="color: white; border-bottom-color: var(--accent-color);">🏪 La Bodega del Táchira</h3>
+                <p style="margin: 1rem 0;">Tu tienda online de productos gastronómicos tachirenses. Envíos a todo Venezuela.</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <span class="tag" style="background: white; color: var(--primary-color);">Café Premium</span>
+                    <span class="tag" style="background: white; color: var(--primary-color);">Cacao Artesanal</span>
+                    <span class="tag" style="background: white; color: var(--primary-color);">Quesos de Altura</span>
+                    <span class="tag" style="background: white; color: var(--primary-color);">Dulces Tradicionales</span>
+                    <span class="tag" style="background: white; color: var(--primary-color);">Panes Frescos</span>
+                </div>
+                <button class="apply-btn" style="margin-top: 1.5rem; background: white; color: var(--primary-color);">Visitar Tienda Online</button>
             </div>
         </section>
 
@@ -609,6 +1545,8 @@
                     <option value="route">Rutas Gastronómicas</option>
                     <option value="job">Ofertas de Empleo</option>
                     <option value="panaderia">Panaderías</option>
+                    <option value="dulceria">Dulcerías</option>
+                    <option value="productor">Productores Locales</option>
                 </select>
                 <button onclick="resetMap()">Restablecer Vista</button>
                 <button onclick="showRoutes()">Mostrar Rutas</button>
@@ -623,92 +1561,89 @@
                     <li><strong>🗺️ Rutas:</strong> Líneas azules - Recorridos gastronómicos disponibles</li>
                     <li><strong>💼 Empleo:</strong> Marcadores verdes - Ofertas laborales activas</li>
                     <li><strong>🥖 Panaderías:</strong> Marcadores naranjas - Panaderías tradicionales</li>
+                    <li><strong>🍬 Dulcerías:</strong> Marcadores rosados - Dulces artesanales</li>
+                    <li><strong>🌱 Productores:</strong> Marcadores marrones - Fincas y productores locales</li>
                     <li>Usa el filtro superior para mostrar/ocultar categorías</li>
                     <li>Haz clic en cualquier marcador para más información</li>
                 </ul>
             </div>
         </section>
-
-        <!-- Recipes Preview Section -->
-        <section id="recetas">
-            <h2>📖 Recetas Destacadas del Libro</h2>
-            <p>Algunas de las recetas tradicionales de "La Cocina Tachirense" de Leonor Peña</p>
-
-            <div class="card-grid">
-                <div class="card">
-                    <h3>Mute o Mondongo Tachirense</h3>
-                    <p><strong>Ingredientes principales:</strong></p>
-                    <ul>
-                        <li>Callo, libro y tripa de res</li>
-                        <li>Maíz blanco pilado</li>
-                        <li>Garbanzos</li>
-                        <li>Auyama villorra</li>
-                        <li>Papa, zanahoria</li>
-                        <li>Cilantrón, cilantro, perejil</li>
-                    </ul>
-                    <p>La sopa dominguera por excelencia de los tachirenses</p>
-                </div>
-
-                <div class="card">
-                    <h3>Hallacas Tachirenses</h3>
-                    <p><strong>Ingredientes principales:</strong></p>
-                    <ul>
-                        <li>Masa de maíz pilado</li>
-                        <li>Carne de gallina, pernil, res</li>
-                        <li>Garbanzos, alcaparras, aceitunas</li>
-                        <li>Pasas, pimentón</li>
-                        <li>Hoja de plátano</li>
-                    </ul>
-                    <p>El plato navideño tradicional del Táchira</p>
-                </div>
-
-                <div class="card">
-                    <h3>Pan Tachirense</h3>
-                    <p><strong>Ingredientes principales:</strong></p>
-                    <ul>
-                        <li>Harina de trigo</li>
-                        <li>Panela rallada</li>
-                        <li>Huevos</li>
-                        <li>Mantequilla</li>
-                        <li>Suero o talbina</li>
-                    </ul>
-                    <p>El famoso pan andino, el mejor de Venezuela</p>
-                </div>
-
-                <div class="card">
-                    <h3>Pizca Andina</h3>
-                    <p><strong>Ingredientes principales:</strong></p>
-                    <ul>
-                        <li>Cebolla junca</li>
-                        <li>Cilantro, perejil</li>
-                        <li>Huevo</li>
-                        <li>Leche (opcional)</li>
-                        <li>Sal</li>
-                    </ul>
-                    <p>El caldo mañanero que entona el estómago</p>
-                </div>
-            </div>
-        </section>
     </div>
 
     <!-- Footer -->
-    <footer style="background: var(--primary-color); color: var(--text-light); text-align: center; padding: 2rem; margin-top: 4rem;">
-        <p><strong> Ideas tomadas de: La Cocina Tachirense</strong></p>
+    <footer>
+        <p><strong>📚 Ideas tomadas de: La Cocina Tachirense</strong></p>
         <p>Autora: Leonor Peña - Segunda Edición 2005</p>
         <p>Biblioteca de Autores y Temas Tachirenses - Tomo 131</p>
-        <p style="margin-top: 1rem;">
-            "Un libro de amor por el Táchira y sus tradiciones culinarias"
-        </p>
+        <p class="book-reference">"Un libro de amor por el Táchira y sus tradiciones culinarias"</p>
         <p style="margin-top: 1rem; font-size: 0.9rem;">
             © 2026 - Portal Turístico y Gastronómico del Táchira
         </p>
-        <p>Powered By: Andes Space Software Division
-        </p>  
+        <p>Powered By: Andes Space Software Division</p>
     </footer>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('mainMenu').classList.toggle('active');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Filter functionality for recipes
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const plato = document.getElementById('filterPlato').value;
+            const ingrediente = document.getElementById('filterIngrediente').value;
+            const dificultad = document.getElementById('filterDificultad').value;
+            const ocasion = document.getElementById('filterOcasion').value;
+            const tiempo = document.getElementById('filterTiempo').value;
+            
+            // In a real application, this would filter the recipe cards
+            alert(`Filtros aplicados:\nPlato: ${plato || 'Todos'}\nIngrediente: ${ingrediente || 'Todos'}\nDificultad: ${dificultad || 'Todas'}\nOcasión: ${ocasion || 'Todas'}\nTiempo: ${tiempo || 'Cualquier'}`);
+            
+            // Show success message
+            const recipeCards = document.querySelectorAll('.recipe-card');
+            recipeCards.forEach(card => {
+                card.style.opacity = '0.7';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, 300);
+            });
+        });
+
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('filterPlato').value = '';
+            document.getElementById('filterIngrediente').value = '';
+            document.getElementById('filterDificultad').value = '';
+            document.getElementById('filterOcasion').value = '';
+            document.getElementById('filterTiempo').value = '';
+            alert('Filtros restablecidos');
+        });
+
+        // Global search functionality
+        document.querySelector('.search-container button').addEventListener('click', function() {
+            const searchTerm = document.getElementById('globalSearch').value.toLowerCase();
+            if (searchTerm) {
+                alert(`Buscando: "${searchTerm}"\n\nEn una implementación real, esto filtraría recetas, restaurantes y productos.`);
+            }
+        });
+
         // Initialize map centered on San Cristóbal, Táchira
         const map = L.map('map').setView([7.7669, -72.2250], 10);
 
@@ -725,7 +1660,7 @@
             { name: "Posada El Rincón Tachirense", lat: 7.8100, lng: -72.2100, type: "restaurant", address: "Táriba" },
             { name: "Café del Valle", lat: 8.0800, lng: -72.0400, type: "restaurant", address: "La Grita" },
             { name: "El Fogón de la Abuela", lat: 7.8800, lng: -72.3400, type: "restaurant", address: "Rubio" },
-            { name: "Dulcería La Melcochera", lat: 7.7680, lng: -72.2230, type: "restaurant", address: "Mercado Principal, San Cristóbal" },
+            { name: "Dulcería La Melcochera", lat: 7.7680, lng: -72.2230, type: "dulceria", address: "Mercado Principal, San Cristóbal" },
             { name: "Gourmet Los Andes", lat: 7.7720, lng: -72.2180, type: "restaurant", address: "Zona Hotelera, San Cristóbal" }
         ];
 
@@ -772,16 +1707,33 @@
             popupAnchor: [0, -30]
         });
 
+        const dulceriaIcon = L.icon({
+            iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2Y0OGZiMiI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgMThjLTQuNDEgMC04LTMuNTktOC04czMuNTktOCA4LTggOCAzLjU5IDggOC0zLjU5IDgtOCA4eiIvPjxwYXRoIGQ9Ik0xMiA2Yy0zLjMxIDAtNiAyLjY5LTYgNnMyLjY5IDYgNiA2IDYtMi42OSA2LTYtMi42OS02LTYtNnptMCAxMGMtMi4yMSAwLTQtMS43OS00LTRzMS43OS00IDQtNCA0IDEuNzkgNCA0LTEuNzkgNC00IDR6Ii8+PC9zdmc+',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        const productorIcon = L.icon({
+            iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzhhNjQ0MiI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgMThjLTQuNDEgMC04LTMuNTktOC04czMuNTktOCA4LTggOCAzLjU5IDggOC0zLjU5IDgtOCA4eiIvPjxwYXRoIGQ9Ik0xMiA2Yy0zLjMxIDAtNiAyLjY5LTYgNnMyLjY5IDYgNiA2IDYtMi42OSA2LTYtMi42OS02LTYtNnptMCAxMGMtMi4yMSAwLTQtMS43OS00LTRzMS43OS00IDQtNCA0IDEuNzkgNCA0LTEuNzkgNC00IDR6Ii8+PC9zdmc+',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
         // Add restaurant markers
         restaurants.forEach(restaurant => {
-            const marker = L.marker([restaurant.lat, restaurant.lng], {
-                icon: restaurant.type === 'panaderia' ? panaderiaIcon : restaurantIcon
-            }).addTo(map);
+            let icon = restaurantIcon;
+            if (restaurant.type === 'panaderia') icon = panaderiaIcon;
+            if (restaurant.type === 'dulceria') icon = dulceriaIcon;
+            
+            const marker = L.marker([restaurant.lat, restaurant.lng], { icon }).addTo(map);
             
             marker.bindPopup(`
                 <strong>${restaurant.name}</strong><br>
                 ${restaurant.address}<br>
-                ${restaurant.type === 'panaderia' ? '🥖 Panadería' : '🍽️ Restaurante'}
+                ${restaurant.type === 'panaderia' ? '🥖 Panadería' : 
+                  restaurant.type === 'dulceria' ? '🍬 Dulcería' : '🍽️ Restaurante'}
             `);
         });
 
@@ -806,11 +1758,11 @@
             polyline.bindPopup(`<strong>${route.name}</strong><br>🗺️ Ruta Gastronómica`);
         });
 
-        // Filter function
+        // Filter function for map
         document.getElementById('filterType').addEventListener('change', function() {
             const filter = this.value;
             
-            // Clear all markers
+            // Clear all markers and polylines
             map.eachLayer((layer) => {
                 if (layer instanceof L.Marker || layer instanceof L.Polyline) {
                     map.removeLayer(layer);
@@ -820,10 +1772,11 @@
             // Add filtered markers
             if (filter === 'all' || filter === 'restaurant') {
                 restaurants.forEach(restaurant => {
-                    const marker = L.marker([restaurant.lat, restaurant.lng], {
-                        icon: restaurant.type === 'panaderia' ? panaderiaIcon : restaurantIcon
-                    }).addTo(map);
-                    marker.bindPopup(`<strong>${restaurant.name}</strong><br>${restaurant.address}`);
+                    if (restaurant.type === 'restaurant') {
+                        let icon = restaurantIcon;
+                        const marker = L.marker([restaurant.lat, restaurant.lng], { icon }).addTo(map);
+                        marker.bindPopup(`<strong>${restaurant.name}</strong><br>${restaurant.address}`);
+                    }
                 });
             }
             
@@ -837,6 +1790,13 @@
             if (filter === 'all' || filter === 'panaderia') {
                 restaurants.filter(r => r.type === 'panaderia').forEach(restaurant => {
                     const marker = L.marker([restaurant.lat, restaurant.lng], { icon: panaderiaIcon }).addTo(map);
+                    marker.bindPopup(`<strong>${restaurant.name}</strong><br>${restaurant.address}`);
+                });
+            }
+            
+            if (filter === 'all' || filter === 'dulceria') {
+                restaurants.filter(r => r.type === 'dulceria').forEach(restaurant => {
+                    const marker = L.marker([restaurant.lat, restaurant.lng], { icon: dulceriaIcon }).addTo(map);
                     marker.bindPopup(`<strong>${restaurant.name}</strong><br>${restaurant.address}`);
                 });
             }
@@ -857,12 +1817,39 @@
         function resetMap() {
             map.setView([7.7669, -72.2250], 10);
             document.getElementById('filterType').value = 'all';
+            document.getElementById('filterType').dispatchEvent(new Event('change'));
         }
 
         function showRoutes() {
             document.getElementById('filterType').value = 'route';
             document.getElementById('filterType').dispatchEvent(new Event('change'));
         }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mainMenu').classList.remove('active');
+                    
+                    // Update active nav link
+                    document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize with all markers
+        document.getElementById('filterType').dispatchEvent(new Event('change'));
     </script>
 </body>
 </html>
